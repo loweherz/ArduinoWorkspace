@@ -1,0 +1,147 @@
+﻿Un esempio che fa al caso tuo
+http://scuola.arduino.cc/it/content/controlla-motore-dc-ponte-h-l293d
+
+E dove prendere il ponte h e magari quarda anche x striscie di led o led ad alta luminosita x i lampioni
+http://www.robot-italy.com/it/l293d-motor-driver.html
+
+grazie mille per il ponte h, lo ho appena acquistato ora vedr� anche per i led, forse costa riesci a darmene 1 o 2
+grazie ancora , adesso provo a studiarmi la roba che mi hai passato
+
+Ho fatto lo sketch che mi avevi detto (maschera).Ora, nel primo if(quello che apro la comunicazione) ci entra, quello 
+che non riesco a fargli fare � farlo stare fermo ad aspettare il primo bit, continua a girarmi velocemente nel ciclo
+(come giusto che sia), ma come faccio a fargli aspettare i bit??
+
+P.S.
+� gia iniziata la costruzione del modellino della casa e sta venendo bene
+
+
+NEGLI IF DEVI METTERE == E NON UN = E BASTA..� UNA CONDIZIONE NON UN ASSEGNAMENTO!!! 
+
+ok ho fatto quella correzzione,scusa per l'errore imperdonabile, ma ancora non riesco a fargli leggere gli 1 e 0, 
+quello che non capisco � perch� quando gli dico enq=Serial.read(); "aspetta il comando" mentre per gli altri
+Serial.read(); non "aspetta"
+
+secondo me ti conviene fare un ciclo che ti legge tutto e poi vai ad agire di conseguenza..
+
+for(i=0; i<10; i++){
+   array[i] = Serial.read();
+}
+
+e dopo l'array lo vedi come la sequenza di bit..capito??
+
+ok ho capito ma allora devo inserire la sequenza di bit nell'array quando lo dichiaro?
+ho inserito il ciclo for come mi hai detto ma quando gli mando p mi risponde con questo messaggio
+
+pcominicazione aperta0123456789comunicazione chiusa o mai iniziata
+
+non riesco a capire dove sia il problema...
+
+
+
+prova a vedere se funzionano le correzioni fatte..c'erano alcuni errori sugli if (leggi caratteri e non numeri)
+ti ho commentato il codice..guardalo..
+
+comunque secondo me devi farti una seriale apposta per xbee perch� secondo me fa casini con la seriale hardware...come avevo fatto pure io
+devi evitare di infilare i pin 0 e 1 della shield su arduino..e collegari i pin 0 e 1 della shield ad altri due pin che faranno da seriale..
+cosi poi fai una seriale software
+
+esempio!!!
+#include <SoftwareSerial.h>
+
+SoftwareSerial myXbee(2, 3); // RX, TX
+
+void setup()  {
+  // Open serial communications and wait for port to open:
+  Serial.begin(9600);
+  
+  Serial.println("Goodnight moon!");
+
+  // set the data rate for the SoftwareSerial port
+  myXbee.begin(9600);
+  myXbee.println("Ciao sono XBEE");
+}
+
+void loop(){ // run over and over
+  if (myXbee.available())
+    Serial.write(myXbee.read());
+  if (Serial.available())
+    myXbee.write(Serial.read());
+}
+
+lunedi prox riusciamo a vederci che andiamo un po avanti?
+
+ho controllato ed � tutto corretto, il problema per� rimane, ora provo a piegare i pin come avevi fatto tu.
+per me va bene qualsiasi luned�, tu intendi il 13??
+
+Si esatto.. Vieni da me verso le 4?
+
+ok per me è perfetto
+non ho ancora piegato i piedini, non voglio fare casini quindi lo farò con te di fianco
+
+ok allora ci vediamo lunedi. Ciao
+
+ho una notizia orribile, non ho salvato il programma finale quindi ha qualche problemino, gentilmente lo potresti correggere??
+grazie mille e scusa per il disturbo
+
+ora dovrebbe essere a posto
+
+ho caricato l'inizio della presentazione in word,dimmi cosa ne pensi 
+grazie
+ho caricato anche maschera3 che è il programma con tutte le modifiche che mi avevi detto di fare.
+il programma originale della maschera lo voglio tenere, magari lo posso usare come esempio nella tesina.
+
+Si tutto perfetto.. La tesina dobbiamo vederla un attimo come strutturarla meglio.. Ora concentrati su 
+processing e cerca di fe un interfaccia grafica come l'avevamo pensata insieme
+
+ok ho fatto lo "scheletro" dell'interfaccia, ma come faccio a colorare le scritte e solo alcuni quadrati? 
+come quelli che dovrò mettere all'interno del riquadro status??
+
+dai un occhiata a quello che ho fatto io!
+
+ok ho guardato il programma e qualcosia ci capisco, mi incasino ancora su qualcosa, quando ci possiamo  vedere ancora??
+
+venerdi alle 15.30 riesci?
+
+purtopppo no, riusciamo lunedì o prima??
+
+sono abbastanza incasinato pure io..non riesci proprio venerdi? 
+
+purtroopo no, sono via tutto il giorno con la scuola
+
+ti faccio sapere se lunedi riesco..tu nel frattempo cerca di andare avanti il piu possibile e di finire il programma in arduino..in processing poi ci do un occhio pure io
+
+ho provato a fare lo schema elettrico con fritzing, ho avuto qualche difficoltà quindi non è molto ordinato, manca la fotoresistenza, abbiamo bisogno di altri 2 pin 
+perchè solo così girerà in senso orario e antiorario
+allego la foto dello schema (sempilce) che ho usato su suggerimento del prof. Zana per costruire la parte elettronica. 
+
+ok va bene dai..penso che siamo a buon punto..il programma di arduino lo stai aggiornando? bisogna aggiungere i due pin per l'inversione di marcia dei motori e gestire anche quella parte li.
+se devi chiudere il cancello/garage agisci su un pin e se devi aprire altri due pin diversi. non è difficile penso. le luci del vialetto le hai montate?
+
+programma di arduino aggiornato, sto finendo il modellino, appena i led ed i fili saranno saldati monterò tutto
+
+ho modificato ancora il programma di arduino, il processing come va?
+
+stasera ci lavoro e cerco di risolvere quel problema dell'altra volta e poi vediamo come fare!! ora guardo il programma arduino
+
+PER ORA PROVA LA VERSIONE DI PROCESSING CHE HO CARICATO..c'è SOLO LA PARTE DI GESTIONE APERTURA E CHIUSURA CANCELLO/GARAGE..se funziona quella poi gestiamo il resto. Procediamo per step ora!!
+
+allora, teoricamente funziona la comunicazione perchè ricevo, il problema è che l'arduino si incazza ancora e non so dove mettere le mani, ora monto la basetta, domani saldo i fili e inizio a collegare,
+se riusciamo a vederci prima degli esami sarebbe una cosa ottima
+
+quando iniziano gli esami?
+
+la prima prova la ho il 19
+
+va bene se ci troviamo lunedi 17?? intanto guardo una possibile soluzione..scusami ma prima non riesco!!
+
+tranquillo, basta che alla fine riusciamo a fare andare tutto, per lunedì va bene.
+
+comunque da sabato compreso posso venire da te anche al mattino se sei disponibile
+
+è sorto un problema di proporzioni galattiche.... ho collegato l'arduino alla basetta con tutti gli integrati e ho cominciato a dare i comandi,
+quando do il comando di aprirsi va tutto bene, il problema sorge quando gli dico di chiudere il cancello, il motoriono si avvia per la chiusura ma 
+finito il suo giro, il motore inverte il senso e si riapre come se gli avessi dato il comando di apertura.
+io non riesco a saltarci fuori, non ho usato il programma in processing ma X-CTU, vedo se riesco a risolvere da solo alla svelta se no ci sarà bisogno di un incontro urgente
+
+sono un gran pistola!!!! avevo messo male i piedini!!!! scusa il disturbo xD ora monto tutto sul plastico e guardo se funziona correttamente
+(sempre usando X-CTU)

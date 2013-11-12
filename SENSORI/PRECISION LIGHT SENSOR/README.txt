@@ -1,0 +1,3 @@
+HA BISOGNO DI UN CONDENSATORE DA 10uF in PARALLELO ALL'USCITA e vin
+
+luce = (5.0* valore_letto * 200.0) / 1024.0;
